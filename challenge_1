@@ -1,0 +1,167 @@
+const EventEmitter = require('events');
+class Device extends EventEmitter {
+    constructor() {
+        super();
+        this.state = 'Off';
+    }
+
+    turnOn() {
+        this.state = 'On';
+        this.emit('isOn');
+    }
+
+    turnOff() {       
+        this.state = 'off';
+        this.emit('isOff');
+    }
+
+    showState() {
+        console.log('The device is', this.state);        
+    }
+}
+
+function radioIsOn() {
+    console.log('listen to your favorite music');
+}
+
+function radioIsOff() {
+    console.log('Mutted');
+}
+
+function tvIsOn() {
+    console.log('Showing your favorite movie');
+}
+
+function tvIsOff() {
+    console.log('sleeping');
+}
+
+
+/*-----------------Radio--Instance-------------*/
+var radio = new Device();
+radio.on('isOn', radioIsOn);
+radio.on('isOff', radioIsOff);
+
+
+/*----------------TV--Instance------------------*/
+var tv = new Device();
+tv.on('isOn', tvIsOn);
+tv.on('isOff', tvIsOff);
+
+
+/*----------------TestCode----------------*/
+/*
+
+tv.showState()
+tv.turnOn();
+tv.showState();
+tv.turnOff();
+tv.showState();
+
+radio.showState()
+radio.turnOn();
+radio.showState();
+radio.turnOff();
+radio.showState();
+*/
+
+
+/*** try2****************
+var events =require ('events');
+var device = new events.EventEmitter();
+
+
+var turnOn=function(){
+    console.log('listent to your favorite music');
+}
+
+
+device.on('radioOn', turnOn);
+
+device.emit('radioOn');
+
+*/
+
+/**** try1****************
+const EventEmitter = require('events');
+class Device extends EventEmitter {
+    constructor() {
+        super();
+        this.state = 'off';
+    }
+    turnOn(state) {
+        this.state ='on';
+        this.emit('isOn');
+        //console.log(this.state);
+    };
+
+    turnOff(state) {
+        this.state = 'off';
+        this.emit('isOff');
+        //console.log('turned off');
+        // console.log(this.state);
+
+    }
+
+}
+
+function showState(device) {
+    console.log('The device is', device.state);
+};
+
+function messageOn(device) {
+    if (this.device == 'radio') {
+        console.log('listen to your favorite music');
+    } else {
+        console.log('Showing your favorite movie');
+    }
+}
+
+function messageOff(device) {
+    if (this.device == 'radio') {
+        console.log('Mutted');
+    } else {
+        console.log('Sleeping');
+    }
+}
+
+
+//-------
+
+var radio = new Device();
+var tv = new Device();
+
+//--------
+
+radio.on('isOn', function () {
+    showState(this);
+});
+radio.on('isOn', function () { messageOn(this) });
+
+radio.on('isOff', function () {
+    showState(this);
+});
+
+radio.on('isOff', function () { messageOff(this) });
+
+//-------
+
+tv.on('isOn', function () {
+    showState(this);
+});
+tv.on('isOn', function () { messageOn(this) });
+
+tv.on('isOff', function () {
+    showState(this);
+});
+tv.on('isOff', function () { messageOff(this) });
+
+
+radio.turnOff();
+//radio.turnOn();
+//tv.turnOn();
+//tv.turnOff();
+   //showState(radio);
+
+*/
+
