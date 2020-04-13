@@ -1,0 +1,12 @@
+// in progress
+
+/*
+const buf = Buffer.from('Hey!');
+console.log(buf);
+*/
+
+var reverse = require ("buffer-reverse")
+var a = new Buffer.from('reverse');
+
+console.log(reverse(a));
+console.log(reverse(a).toString());
