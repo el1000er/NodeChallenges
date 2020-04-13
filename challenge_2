@@ -1,0 +1,40 @@
+/*
+let counter = 0;
+
+function printLoginAttempt() {
+
+    console.log("Login attempt %d", counter);
+
+}
+function updateCounter() {
+    if (counter < 10) {
+        counter++;
+        printLoginAttempt();
+    } else {
+        console.log('execution cancelled');
+    }
+
+}
+
+setInterval(updateCounter, 3000);
+*/
+
+let counter = 0;
+let intervalId = null;
+function printLoginAttempt() {
+
+    console.log("Login attempt %d", counter);
+
+}
+function updateCounter() {
+    if (counter < 10) {
+        counter++;
+        printLoginAttempt();
+    } else {
+        console.log('Execution cancelled, try again later...');
+        clearInterval(intervalId);
+    }
+}
+
+intervalId = setInterval(updateCounter, 3000);
+
