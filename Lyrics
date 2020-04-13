@@ -1,0 +1,170 @@
+1.	Create one eventEmitter named device with two methods (turnOn and turnOff) that emits two events named "isOn" and "isOff". Then create two instances of this emitter named "radio" and "tv". When this events were fired, the messages below must be logged:
+
+	Radio	Tv
+isOn	Listen your favorite music!	Showing your favorite movie
+isOff	Mutted	Sleeping
+	
+Create on method inside the eventEmitter named showState to log the state of the device.
+*To test, your solution, you can use the code below:
+radio.showState();
+radio.turnOn();
+radio.showState();
+radio.turnOff();
+radio.showState();
+
+tv.showState();
+tv.turnOn();
+tv.showState();
+tv.turnOff();
+tv.showState();
+
+The result should be:
+The device is off
+Listen your favorite music!
+The device is on
+Mutted
+The device is off
+The device is off
+Showing your favorite movie
+The device is on
+Sleeping
+The device is off
+
+2.	Create one function that shows each 3 seconds the message ('logging attempt x'). When the attempt 10 is executed, you must cancell the execution. 
+
+*The result in the console must be:
+logging attempt  1
+logging attempt  2
+logging attempt  3
+logging attempt  4
+logging attempt  5
+logging attempt  6
+logging attempt  7
+logging attempt  8
+logging attempt  9
+logging attempt  10
+
+3.	Create one stream to transform csv(semicolon separated line) strings in a space separated line.
+*To test, your solution, you can use the code below:
+transform.write('01;02;03;04;05');
+transform.write('06;07;08;09;10');
+transform.write('11;12;13;14;15');
+transform.write('16;17;18;19;20');
+
+The result should be:
+"01 02 03 04 05"
+"06 07 08 09 10"
+"11 12 13 14 15"
+"16 17 18 19 20"
+
+4.	Create one function named 'stringToReverseBuffer' to receive one string and return one buffer with the value reversed.
+*To test, your solution, you can use the code below:
+const reverse = stringToReverseBuffer('reverse');
+console.log(reverse);
+
+The result should be:
+<Buffer 65 73 72 65 76 65 72>
+
+5.	Create one service using express to manage your beverage collection. You have to store your registers in the way that you prefer (memory is the easiest way) with the endpoints below:	
+a)	create one beverage register based on the JSON below:
+{
+name: String,
+type: String,
+nationality: String
+}
+
+If the register was created successfully, the response must be:
+
+
+
+
+
+
+
+
+{ 
+		success: true,
+		message: 'register created successfully',
+		beverage:
+		{ 
+			name: 'Corona',
+			type: 'beer',
+			nacionality: 'Mexico',
+			id: '1578490311926' 
+		} 
+}
+
+If the endpoint receive one empty body, the response must be:
+
+{
+    "success": false,
+    "message": "Empty body"
+}
+
+b)	update the beverage register based on the id.
+c)	retrieve the specific register if the id is passed otherwise return all registers.
+d)	remove one beverage based on the id.
+
+*To test, your solution, you can use the code below:
+const axios = require('axios');
+
+async function execTest(){
+    const URL_BASE = 'http://localhost:3000';
+    const beverage = {
+        name: 'Corona',
+        type: 'beer',
+        nacionality: 'Mexico'
+    }; 
+    const changed = {
+        name: 'Corona Changed',
+        type: 'beer',
+        nacionality: 'Mexico'
+    };    
+
+    try{
+        const result01 = await axios.post(URL_BASE, beverage);        
+        const id = result01.data.beverage.id;
+        changed['id'] = id;
+        const result02 = await axios.get(URL_BASE);
+        const result03 = await axios.get(URL_BASE + '?id=' + id);
+        const result04 = await axios.put(URL_BASE + '/' + id, changed);
+        const result05 = await axios.delete(URL_BASE + '/' + id);
+        const result06 = await axios.get(URL_BASE);
+        console.log('Create register success: ', result01.data);
+        console.log('Get all registers: ', result02.data);
+        console.log('Get one register: ', result03.data);
+        console.log('Update register: ', result04.data);
+        console.log('Remove register: ', result05.data);
+        console.log('Get all registers: ', result06.data);
+    } catch( err ){
+        console.log('Sorry something is wrong: ', err);
+    }
+    
+};
+
+execTest();
+
+The result should be:
+Create register success:  { success: true,
+  message: 'register created successfully',
+  beverage:
+   { name: 'Corona',
+     type: 'beer',
+     nacionality: 'Mexico',
+     id: '1578490311926' } }
+Get all registers:  { data:
+   [ { name: 'Corona',
+       type: 'beer',
+       nacionality: 'Mexico',
+       id: '1578490311926' } ] }
+Get one register:  { name: 'Corona',
+  type: 'beer',
+  nacionality: 'Mexico',
+  id: '1578490311926' }
+Update register:  { name: 'Corona Changed',
+  type: 'beer',
+  nacionality: 'Mexico',
+  id: '1578490311926' }
+Remove register:  { success: true, message: 'register removed successfully' }
+Get all registers:  { data: [] }
+
