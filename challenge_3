@@ -1,0 +1,43 @@
+// done???
+/*
+var myStr = '01;02;03;04;05'
+var newStr = myStr.replace(/;/g,' ');
+console.log(newStr);
+*/
+
+/*
+function stringTransform(input){
+   var output= (input.toString()).replace(/;/g,' ');
+    console.log(output);
+}
+
+stringTransform('01;02;03;04;05');
+*/
+
+
+const {Transform} = require('stream');
+class CsvTransform extends Transform{
+    constructor(options){
+        super(options);
+    }
+    _transform(data,encoding,callback){
+        let output = data? (data.toString()).replace(/;/g,' '):'';
+        this.push(output);
+        callback();
+    }
+    _flush(callback){
+        callback();
+    }
+}
+
+const transform = new CsvTransform();
+transform.on('data',function(data){
+    console.log(data.toString());
+})
+
+//---------------Test data--------------
+
+transform.write('01;02;03;04;05');
+transform.write('06;07;08;09;10');
+transform.write('11;12;13;14;15');
+transform.write('16;17;18;19;20');
